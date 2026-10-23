@@ -3,7 +3,8 @@
 An independent OpenCode customization with a minimal Mac interface and parallel agent sessions. This project is not affiliated with the upstream OpenCode team.
 
 - Development branch: `parallel-mvp`.
-- Mac acceptance packages: the **Parallel Mac acceptance build** workflow in this repository's Actions. Builds include this project's modified backend; they are not upstream downloads.
+- Mac installer (Apple Silicon): the artifact in the [successful native Mac acceptance run](https://github.com/DHCFE/opencode/actions/runs/40006226179). The App includes this project's modified backend and has passed signature and native startup checks.
+- Actual account authorization, subscription access, and model inference still require first-login acceptance; opening the connection window does not validate those permissions.
 - Build, authentication, verification status, and limitations: [PARALLEL_MVP.md](PARALLEL_MVP.md).
 - Upstream baseline: `09a1db3b088293d48d84d62e86c02b69b40ed3ee`; original MIT license and source history retained.
 
