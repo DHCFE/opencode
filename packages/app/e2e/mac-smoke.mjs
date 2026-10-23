@@ -87,12 +87,17 @@ try {
 } catch (error) {
   result.error = error.stack ?? error.message
   await page?.screenshot({ path: path.join(output, "mac-failure.png"), timeout: 5_000 }).catch(() => {})
-  throw error
+  console.error(error)
+  process.exitCode = 1
 } finally {
   await writeFile(path.join(output, "mac-smoke.json"), JSON.stringify(result, null, 2))
   await writeFile(path.join(output, "mac-app.log"), log)
   // The isolated test profile is disposable; don't wait on application quit UI.
   app.kill("SIGKILL")
-  await browser?.close()
+  app.stdout.destroy()
+  app.stderr.destroy()
   clearTimeout(watchdog)
+  // The CLI service and Playwright driver may retain handles after the window
+  // exits. Evidence is flushed; terminate this acceptance runner with its result.
+  process.exit(process.exitCode ?? 0)
 }

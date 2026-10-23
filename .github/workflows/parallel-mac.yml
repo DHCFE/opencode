@@ -4,7 +4,11 @@ on:
   workflow_dispatch:
   push:
     branches: [parallel-mvp]
-    paths-ignore: ["**/*.md"]
+    paths-ignore:
+      - "**/*.md"
+      - "packages/app/e2e/**"
+      - ".github/workflows/parallel-mac.yml"
+      - ".github/workflows/parallel-mac-verify.yml"
 
 permissions:
   contents: read
