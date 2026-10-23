@@ -1,3 +1,16 @@
+# OpenCode Parallel
+
+An independent OpenCode customization with a minimal Mac interface and parallel agent sessions. This project is not affiliated with the upstream OpenCode team.
+
+- Development branch: `parallel-mvp`.
+- Mac acceptance packages: the **Parallel Mac acceptance build** workflow in this repository's Actions. Builds include this project's modified backend; they are not upstream downloads.
+- Build, authentication, verification status, and limitations: [PARALLEL_MVP.md](PARALLEL_MVP.md).
+- Upstream baseline: `09a1db3b088293d48d84d62e86c02b69b40ed3ee`; original MIT license and source history retained.
+
+The upstream README is retained below for provenance and reference.
+
+---
+
 <p align="center">
   <a href="https://opencode.ai">
     <picture>
@@ -66,12 +79,12 @@ nix run github:anomalyco/opencode  # Nix
 
 OpenCode is also available as a desktop application. Download it from [opencode.ai/download](https://opencode.ai/download).
 
-| Platform              | Download                           |
-| --------------------- | ---------------------------------- |
-| macOS (Apple Silicon) | `opencode-desktop-mac-arm64.dmg`   |
-| macOS (Intel)         | `opencode-desktop-mac-x64.dmg`     |
-| Windows               | `opencode-desktop-win-x64.exe`     |
-| Linux                 | `.deb`, `.rpm`, or `.AppImage`     |
+| Platform              | Download                         |
+| --------------------- | -------------------------------- |
+| macOS (Apple Silicon) | `opencode-desktop-mac-arm64.dmg` |
+| macOS (Intel)         | `opencode-desktop-mac-x64.dmg`   |
+| Windows               | `opencode-desktop-win-x64.exe`   |
+| Linux                 | `.deb`, `.rpm`, or `.AppImage`   |
 
 ```bash
 # macOS (Homebrew)

@@ -46,6 +46,7 @@ jobs:
         working-directory: packages/desktop
         run: bunx electron-builder --mac --arm64 --config electron-builder.parallel.config.ts --publish never
       - name: Launch packaged Mac app
+        timeout-minutes: 5
         working-directory: packages/app
         env:
           OPENCODE_MAC_EXECUTABLE: ${{ github.workspace }}/packages/desktop/dist/mac-arm64/OpenCode Parallel.app/Contents/MacOS/OpenCode Parallel
@@ -61,7 +62,6 @@ jobs:
           name: opencode-parallel-mac-arm64
           path: |
             packages/desktop/dist/*.dmg
-            packages/desktop/dist/*.zip
             artifacts/
           if-no-files-found: error
           retention-days: 14

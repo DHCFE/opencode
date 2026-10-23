@@ -2,7 +2,7 @@
 
 验收目标是可安装的 macOS App：重构后的主面板、真实 OpenCode Agent、多模型/同模型多实例并行，以及应用内官方 Sign in with ChatGPT。**当前尚未完成 Mac 安装包构建和真实账号推理验收，源码及浏览器测试不等于该目标已完成。**
 
-基于 [anomalyco/opencode](https://github.com/anomalyco/opencode) 的默认分支 `dev`，精确上游提交 `09a1db3b088293d48d84d62e86c02b69b40ed3ee`，保留 MIT 许可证与上游来源。开发分支 `parallel-mvp`，真正 fork 为 [DHCFE/opencode](https://github.com/DHCFE/opencode)。本分支是独立二次开发项目，与 OpenCode 上游团队无隶属关系。本项目的源码克隆、修改、依赖安装和验证均在云端 Linux x86_64 工作区进行，没有在用户电脑保存或构建源码，也没有向上游推送。
+基于 [anomalyco/opencode](https://github.com/anomalyco/opencode) 的默认分支 `dev`，精确上游提交 `09a1db3b088293d48d84d62e86c02b69b40ed3ee`，保留 MIT 许可证与上游来源。开发分支 `parallel-mvp`，独立项目仓库为 [DHCFE/opencode](https://github.com/DHCFE/opencode)。本分支是独立二次开发项目，与 OpenCode 上游团队无隶属关系。本项目的源码克隆、修改、依赖安装和验证均在云端 Linux x86_64 工作区进行，没有在用户电脑保存或构建源码，也没有向上游推送。
 
 ## 已实现的三个部分
 
@@ -29,7 +29,7 @@ Mac App 自带本分支修改后的 CLI 后端。安装后，App 和回调服务
 
 ## 云端 Mac 构建与安装验收
 
-`.github/workflows/parallel-mac.yml` 在用户 fork 的 `parallel-mvp` push 或手动启动时使用 GitHub `macos-26` ARM64 runner；明确排除上游仓库，权限仅 contents:read，不发布 Release。它将：
+`.github/workflows/parallel-mac.yml` 在独立项目仓库的 `parallel-mvp` push 或手动启动时使用 GitHub `macos-26` ARM64 runner；明确排除上游仓库，权限仅 contents:read，不发布 Release。它将：
 
 1. 固定 Bun 安装依赖，执行全仓检查。
 2. 从本分支编译原生 ARM64 CLI 和嵌入 UI，验证 CLI 可执行。
@@ -37,7 +37,7 @@ Mac App 自带本分支修改后的 CLI 后端。安装后，App 和回调服务
 4. 使用独立名称/应用 ID `OpenCode Parallel` / `app.opencode.parallel` 打包 DMG 与 ZIP，不配置上游更新发布。
 5. 在原生 Mac 启动打包 App，验证主面板、可编辑输入与真实连接对话框，记录截图、运行结果、精确源码 commit 和 SHA256。
 
-成功的工作流应在 Actions artifact 中提供 `opencode-parallel-mac-arm64`。**本轮尚无成功的工作流运行或安装包链接。** 当前开发环境是云端 Linux；GitHub 登录已经完成，真正 fork 已创建。原生 Mac 构建状态以该 fork 的 Actions 运行记录为准。
+成功的工作流应在 Actions artifact 中提供 `opencode-parallel-mac-arm64`。**本轮尚无成功的工作流运行或安装包链接。** 当前开发环境是云端 Linux；GitHub 登录已经完成，已按用户要求解除 Fork 网络关系，代码与提交历史保留。原生 Mac 构建状态以该项目仓库的 Actions 运行记录为准。
 
 该配置是内部验收包，使用 ad-hoc 签名，未 Apple notarize；不冒称已获得 Developer ID 分发签名。正式无提示分发仍需发行方的 Apple 签名和公证凭据。用户电脑只需安装未来构建出的 App，无需克隆源码、安装 Bun 或编译。
 

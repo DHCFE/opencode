@@ -293,6 +293,7 @@ export function createParallel() {
         if (!branch.admitted) return
         const running = data.session.status(branch.sessionID) === "running"
         if (!running || queue.busy(branch.id)) return
+        cancelled.delete(branch.id)
         update(branch.id, { status: "running", error: undefined })
         void queue
           .add(branch.id, () => finish(branch.id))

@@ -127,6 +127,21 @@ test("live SSE output is visible before completion and queued or active branches
   held.release()
   await expect(branches.getByText("已完成", { exact: true })).toHaveCount(1)
   expect(mock.prompts).toHaveLength(2)
+  await mock.push([
+    { id: "evt_cancelled_idle", created: Date.now(), type: "session.execution.interrupted", data: { sessionID } },
+  ])
+  await activeBranch.getByRole("link", { name: "打开完整会话" }).click()
+  await expect(page.locator('[data-component="composer-editor"]')).toBeEditable()
+  const resumed = await holdRoute(page, /\/api\/experimental\/session\/[^/?]+\/wait(?:\?|$)/, { method: "POST" })
+  await mock.push([
+    { id: "evt_cancelled_resumed", created: Date.now(), type: "session.execution.started", data: { sessionID } },
+  ])
+  await resumed.arrived
+  await page.goBack()
+  await expect(activeBranch).toContainText("思考中")
+  resumed.release()
+  await expect(activeBranch).toContainText("已完成")
+  expect(mock.prompts).toHaveLength(2)
 })
 
 test("session creation failures are shown per branch while other instances complete", async ({ page }) => {
