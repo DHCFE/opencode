@@ -370,6 +370,7 @@ export function Titlebar(props: { verticalTabs?: { mount?: HTMLElement } }) {
 
                 case "settings":
                 case "connect":
+                case "parallel":
                 case "home": {
                   const selection = layout.home.selection()
 

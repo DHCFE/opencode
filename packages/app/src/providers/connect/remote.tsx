@@ -11,7 +11,7 @@ export function authServerName(server: ServerConnection.Any) {
   return serverName(server)
 }
 
-export function RemoteAuthNotice(props: { server: ServerConnection.Any }) {
+export function RemoteAuthNotice(props: { server: ServerConnection.Any; loopback?: boolean }) {
   const language = useLanguage()
 
   return (
@@ -25,6 +25,9 @@ export function RemoteAuthNotice(props: { server: ServerConnection.Any }) {
             {language.t("provider.connect.remote.title", { server: name() })}
           </p>
           <p class="text-v2-text-text-muted">{language.t("provider.connect.remote.description")}</p>
+          <Show when={props.loopback}>
+            <p class="text-v2-text-text-muted">{language.t("provider.connect.remote.loopback")}</p>
+          </Show>
         </div>
       )}
     </Show>

@@ -10,6 +10,14 @@ test.each(["settings", "connect"] as const)("%s has its own layout route", (type
   expect(currentRoute(`/${type}`, "")).toEqual({ type })
 })
 
+test.each([
+  { path: "/", type: "parallel" },
+  { path: "/parallel", type: "parallel" },
+  { path: "/projects", type: "home" },
+])("$path identifies its actual screen for desktop onboarding", ({ path, type }) => {
+  expect(currentRoute(path, "")).toEqual({ type })
+})
+
 describe("layout persistence", () => {
   const schema = Persistence.withInitial(layoutPersistence, initialLayout(ServerConnection.Key.make("local")))
   const decode = Schema.decodeUnknownSync(schema)

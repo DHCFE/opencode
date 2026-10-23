@@ -1,3 +1,5 @@
+import { A } from "@solidjs/router"
+import { useLanguage } from "@/runtime/i18n/language"
 import { ScrollView } from "@opencode/ui/scroll-view"
 import { createMediaQuery } from "@solid-primitives/media"
 import { Show } from "solid-js"
@@ -11,6 +13,7 @@ import { createHomeSessionsController } from "./sessions/controller"
 import { HomeSessions } from "./sessions/region"
 
 export function Home() {
+  const language = useLanguage()
   const mobile = createMediaQuery("(max-width: 767px)")
   const home = createHomeController()
   const projects = createHomeProjectsController(home)
@@ -26,6 +29,13 @@ export function Home() {
         bg-v2-background-bg-base shadow-[var(--v2-elevation-raised)]
       `}
     >
+      <A
+        href="/parallel"
+        class="mx-6 mt-4 flex items-center justify-between border-b border-border-weak-base pb-3 text-13 text-text-base"
+      >
+        <span>{language.t("parallel.title")}</span>
+        <span aria-hidden="true">↗</span>
+      </A>
       <Show when={mobile()}>
         <div class="relative z-40 -mb-3 shrink-0 px-3 pt-3">
           <HomeProjects projects={projects} scroll={scroll} dropdown />

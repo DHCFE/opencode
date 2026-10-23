@@ -1,6 +1,8 @@
+import { parallelEnglish } from "@/parallel/copy"
 import { DESKTOP_NATIVE_ENGLISH } from "./desktop-native"
 
 export const dict = {
+  ...parallelEnglish,
   ...DESKTOP_NATIVE_ENGLISH,
   "session.location.unavailable": "Session location unavailable",
   "session.location.description": "Choose another directory to continue this session.",
@@ -181,6 +183,8 @@ export const dict = {
   "provider.connect.remote.title": "Connecting on “{{server}}”",
   "provider.connect.remote.description":
     "Your OpenCode credentials will be stored on this server. Models will be available through this server.",
+  "provider.connect.remote.loopback":
+    "ChatGPT sign-in returns to a local address on the machine running OpenCode. Use the local Desktop server, or open the sign-in browser on the same machine as this server.",
   "provider.connect.title.anthropicProMax": "Login with Anthropic",
   "provider.connect.selectMethod": "Select login method for {{provider}}.",
   "provider.connect.method.apiKey": "API key",

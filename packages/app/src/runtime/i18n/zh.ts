@@ -1,8 +1,10 @@
+import { parallelChinese } from "@/parallel/copy"
 import en from "./en"
 
 type Keys = keyof typeof en
 
 export const dict = {
+  ...parallelChinese,
   "desktop.menu.app": "OpenCode",
   "desktop.menu.file": "文件",
   "desktop.menu.edit": "编辑",

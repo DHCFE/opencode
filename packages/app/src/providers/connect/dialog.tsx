@@ -433,7 +433,7 @@ function ProviderConnection(props: {
   const accountActions = useProviderAccountActions(directory)
   const integrationID = consoleIntegration(props.provider)
   const isConsole = CONSOLE_PROVIDERS.has(props.provider)
-  const remote = isConsole && authServerName(sdk.server) !== undefined
+  const remote = (isConsole || props.provider === "openai") && authServerName(sdk.server) !== undefined
 
   const [state, setState] = createStore<{
     copied: boolean
@@ -1559,7 +1559,13 @@ function ProviderConnection(props: {
         >
           <Show when={remote}>
             <div class="mb-5 px-3">
-              <RemoteAuthNotice server={sdk.server} />
+              <RemoteAuthNotice
+                server={sdk.server}
+                loopback={(() => {
+                  const method = controller.currentMethod()
+                  return method?.type === "oauth" && method.id === "chatgpt-token-sharing"
+                })()}
+              />
             </div>
           </Show>
           <Switch>

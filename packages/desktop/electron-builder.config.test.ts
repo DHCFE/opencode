@@ -7,6 +7,7 @@ import path from "node:path"
 import { fileURLToPath, pathToFileURL } from "node:url"
 import type { Configuration } from "electron-builder"
 import { getConfig } from "./electron-builder.config"
+import { getParallelConfig } from "./electron-builder.parallel.config"
 import { CLI_BINARIES, nodePtyPackage } from "./scripts/utils"
 
 // Use electron-builder's matcher so the tests also cover its glob and directory traversal semantics.
@@ -180,5 +181,25 @@ test("the trimmed Zip.js package can still export compressed logs", async () => 
     await zip.terminateWorkers()
   } finally {
     await rm(dir, { recursive: true, force: true })
+  }
+})
+
+test("parallel acceptance package keeps its identity and cannot publish upstream", () => {
+  const previous = process.env.OPENCODE_CHANNEL
+  process.env.OPENCODE_CHANNEL = "dev"
+  try {
+    const config = getParallelConfig()
+    expect(config.appId).toBe("app.opencode.parallel")
+    expect(config.productName).toBe("OpenCode Parallel")
+    expect(config.publish).toBeNull()
+    expect(config.mac?.identity).toBe("-")
+    expect(config.mac?.notarize).toBe(false)
+    expect(config.afterPack).toBeFunction()
+    expect(config.extraResources).toEqual(load("dev").extraResources)
+    process.env.OPENCODE_CHANNEL = "prod"
+    expect(getParallelConfig).toThrow("require OPENCODE_CHANNEL=dev")
+  } finally {
+    if (previous === undefined) delete process.env.OPENCODE_CHANNEL
+    else process.env.OPENCODE_CHANNEL = previous
   }
 })

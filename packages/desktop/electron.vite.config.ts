@@ -62,6 +62,7 @@ export default defineConfig(({ command }) => {
       define: {
         // Local renderer/server mode still uses the dev application identity and updater policy.
         "import.meta.env.OPENCODE_CHANNEL": JSON.stringify(channel === "local" ? "dev" : channel),
+        "import.meta.env.OPENCODE_PARALLEL_BUILD": JSON.stringify(process.env.OPENCODE_PARALLEL_BUILD ?? ""),
       },
       build: {
         minify: command === "build",

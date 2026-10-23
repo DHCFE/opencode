@@ -1,5 +1,6 @@
 import { Route, useParams } from "@solidjs/router"
 import { createMemo, lazy, Show, Suspense, type ParentProps } from "solid-js"
+import { ParallelProvider } from "@/parallel/context"
 import { Home } from "@/home/route"
 import { ServerProvider } from "@/runtime/server/current"
 import { useGlobal } from "@/runtime/server/runtime"
@@ -14,6 +15,8 @@ import { ExtensionAttachment } from "@/runtime/extension/root"
 export const File = lazy(() => import("@opencode/session-ui/file").then((module) => ({ default: module.File })))
 
 const loadSessionRoute = () => Promise.all([import("@/session/route"), File.preload()]).then(([module]) => module)
+
+const ParallelRoute = lazy(() => import("@/parallel/route").then((module) => ({ default: module.ParallelRoute })))
 
 const DraftRoute = lazy(() => import("@/new-session/route").then((module) => ({ default: module.DraftRoute })))
 
@@ -43,7 +46,9 @@ export function preloadRoute(url: string) {
 export function AppRoutes() {
   return (
     <Route component={AppLayout}>
-      <Route path="/" component={Home} />
+      <Route path="/" component={ParallelRoute} />
+      <Route path="/projects" component={Home} />
+      <Route path="/parallel" component={ParallelRoute} />
       <Route path="/settings" component={SettingsScreen} />
       <Route
         path="/server/:serverKey/session/:id"
@@ -101,7 +106,9 @@ function AppLayout(props: ParentProps) {
       <LayoutProvider>
         <SettingsSurfaceProvider>
           <ExtensionAttachment>
-            <Shell>{props.children}</Shell>
+            <ParallelProvider>
+              <Shell>{props.children}</Shell>
+            </ParallelProvider>
           </ExtensionAttachment>
         </SettingsSurfaceProvider>
       </LayoutProvider>
